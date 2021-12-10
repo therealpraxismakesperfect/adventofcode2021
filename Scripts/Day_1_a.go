@@ -1,4 +1,5 @@
 package main
+
 import (
 	"container/list"
 	"fmt"
@@ -7,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 )
+
 func main() {
 	file, err := ioutil.ReadFile("Source Files\\Day_1_a_input.txt")
 	if err != nil {
@@ -14,10 +16,8 @@ func main() {
 	}
 	text := string(file)
 	l := list.New()
-	myArray := [...]int{}
 	var mySlice = []int{}
-	// l.PushBack(list_item)
-	for _, line := range strings.Split(strings.TrimSuffix(text, "\n"), "\n") {
+	for _, line := range strings.Split(strings.TrimSuffix(text, "\r\n"), "\r\n") {
 		lineInt, err := strconv.ParseInt(line, 0, 64)
 		if err != nil {
 			log.Fatal(err)
@@ -28,10 +28,13 @@ func main() {
 	}
 	var previousIndicator = 999999999
 	var numIncreases = 0
-	for i := 0; i < len(l); i++{
-		var currentIndicator = l[i]
-		currentIndicator, err := strconv.ParseInt(nth i l, 0, 64)
+	for i := 0; i < len(mySlice); i++ {
+		var currentIndicator = mySlice[i]
+		if currentIndicator > previousIndicator {
+			numIncreases += 1
+		}
+		previousIndicator = currentIndicator
 	}
-	fmt.Println(text)
-	fmt.Print(mySlice)
+	fmt.Println(mySlice)
+	fmt.Println(strconv.Itoa(numIncreases))
 }
